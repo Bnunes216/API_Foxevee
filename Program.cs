@@ -10,13 +10,15 @@ namespace ApiJogo
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Adicionar serviços ao contêiner.
+            // Adicionar serviï¿½os ao contï¿½iner.
 
             builder.Services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+                        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
+            ));
 
             builder.Services.AddControllers();
-            // Swagger/OpenAPI configuração
+            // Swagger/OpenAPI configuraï¿½ï¿½o
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
@@ -25,7 +27,7 @@ namespace ApiJogo
 
             var app = builder.Build();
 
-            // Configuração do pipeline de requisição HTTP.
+            // Configuraï¿½ï¿½o do pipeline de requisiï¿½ï¿½o HTTP.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
